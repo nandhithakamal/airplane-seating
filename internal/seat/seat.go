@@ -1,7 +1,7 @@
 package seat
 
 import (
-	"airplane-seating/internal/seatType"
+	"airplane-seating/internal/seat/seatType"
 	"errors"
 )
 
@@ -25,10 +25,10 @@ func (s *Seat) BlockSeat(passengerId int) error {
 
 func NewSeat(seatType seatType.SeatType, row, column int) *Seat {
 	return &Seat{
-		seatType,
-		row,
-		column,
-		true,
-		-1,
+		seatType:    seatType,
+		row:         row,
+		column:      column,
+		isAvailable: true,
+		passengerId: -1,
 	}
 }

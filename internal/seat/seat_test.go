@@ -1,7 +1,7 @@
 package seat
 
 import (
-	"airplane-seating/internal/seatType"
+	"airplane-seating/internal/seat/seatType"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
