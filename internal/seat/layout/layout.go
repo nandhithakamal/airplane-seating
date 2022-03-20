@@ -11,11 +11,13 @@ type Layout [][]int
 
 func Initialise(layout Layout) ([]*seat.Seat, error) {
 	backMostSeatRow, rightMostSeatColumn, _ := computeExtremities(layout)
-	aisles := computeAisleColumns(layout, rightMostSeatColumn)
+	aisleSeatColumns := computeAisleColumns(layout, rightMostSeatColumn)
+	windowSeatColumns := computeWindowColumns(rightMostSeatColumn)
 
 	//todo: remove later
 	fmt.Printf("backMost -> %v\n rightMost -> %v\n", backMostSeatRow, rightMostSeatColumn)
-	fmt.Printf("aisles -> %v\n", aisles)
+	fmt.Printf("aisles -> %v\n", aisleSeatColumns)
+	fmt.Printf("windows -> %v\n", windowSeatColumns)
 
 	return nil, nil
 }
@@ -49,4 +51,8 @@ func computeAisleColumns(layout Layout, rightMost int) []int {
 		finalColumnOfLastGroup = finalColumnOfCurrentGroup
 	}
 	return aisleColumns
+}
+
+func computeWindowColumns(rightMost int) []int {
+	return []int{leftmostSeatColumn, rightMost}
 }

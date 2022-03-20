@@ -112,3 +112,28 @@ func Test_computeAisleColumns_ShouldReturnAisleColumnNumbers(t *testing.T) {
 		})
 	}
 }
+
+func Test_computeWindowColumns_ShouldReturnWindowColumnNumbers(t *testing.T) {
+	tests := []struct {
+		name                  string
+		rightMost             int
+		expectedWindowColumns []int
+	}{
+		{
+			name:                  "2By2Layout",
+			rightMost:             4,
+			expectedWindowColumns: []int{1, 4},
+		},
+		{
+			name:                  "2By2Layout",
+			rightMost:             9,
+			expectedWindowColumns: []int{1, 9},
+		},
+	}
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			actualWindowColumns := computeWindowColumns(test.rightMost)
+			assert.Equal(t, test.expectedWindowColumns, actualWindowColumns)
+		})
+	}
+}
