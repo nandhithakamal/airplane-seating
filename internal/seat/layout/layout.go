@@ -13,11 +13,13 @@ func Initialise(layout Layout) ([]*seat.Seat, error) {
 	backMostSeatRow, rightMostSeatColumn, _ := computeExtremities(layout)
 	aisleSeatColumns := computeAisleColumns(layout, rightMostSeatColumn)
 	windowSeatColumns := computeWindowColumns(rightMostSeatColumn)
+	middleSeatColumns := computeMiddleColumns(windowSeatColumns, aisleSeatColumns)
 
 	//todo: remove later
 	fmt.Printf("backMost -> %v\n rightMost -> %v\n", backMostSeatRow, rightMostSeatColumn)
 	fmt.Printf("aisles -> %v\n", aisleSeatColumns)
 	fmt.Printf("windows -> %v\n", windowSeatColumns)
+	fmt.Printf("middles -> %v\n", middleSeatColumns)
 
 	return nil, nil
 }
@@ -55,4 +57,23 @@ func computeAisleColumns(layout Layout, rightMost int) []int {
 
 func computeWindowColumns(rightMost int) []int {
 	return []int{leftmostSeatColumn, rightMost}
+}
+
+func computeMiddleColumns(windowColumns, aisleColumns []int) []int {
+	var middleColumns []int
+	for i := leftmostSeatColumn + 1; i < windowColumns[1]; i++ {
+		if !isElementPresent(i, aisleColumns) {
+			middleColumns = append(middleColumns, i)
+		}
+	}
+	return middleColumns
+}
+
+func isElementPresent(element int, arr []int) bool {
+	for _, i := range arr {
+		if i == element {
+			return true
+		}
+	}
+	return false
 }

@@ -137,3 +137,37 @@ func Test_computeWindowColumns_ShouldReturnWindowColumnNumbers(t *testing.T) {
 		})
 	}
 }
+
+func Test_computeMiddleColumns_ShouldReturnMiddleColumnNumbers(t *testing.T) {
+	tests := []struct {
+		name                  string
+		windowColumns         []int
+		aisleColumns          []int
+		expectedMiddleColumns []int
+	}{
+		{
+			name:                  "no middle seats",
+			windowColumns:         []int{1, 4},
+			aisleColumns:          []int{2, 3},
+			expectedMiddleColumns: []int{},
+		},
+		{
+			name:                  "3 column groups",
+			windowColumns:         []int{1, 6},
+			aisleColumns:          []int{3, 4},
+			expectedMiddleColumns: []int{2, 5},
+		},
+		{
+			name:                  "2By2Layout",
+			windowColumns:         []int{1, 9},
+			aisleColumns:          []int{3, 4, 5, 6},
+			expectedMiddleColumns: []int{2, 7, 8},
+		},
+	}
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			actualMiddleColumns := computeMiddleColumns(test.windowColumns, test.aisleColumns)
+			assert.Equal(t, test.expectedMiddleColumns, actualMiddleColumns)
+		})
+	}
+}
