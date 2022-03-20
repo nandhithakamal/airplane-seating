@@ -1,9 +1,9 @@
 package seatType
 
-type SeatType int
+type SeatType string
 
 const (
-	WINDOW SeatType = iota
-	AISLE
-	MIDDLE
+	WINDOW SeatType = "W"
+	MIDDLE          = "M"
+	AISLE           = "A"
 )
