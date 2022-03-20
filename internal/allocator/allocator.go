@@ -4,26 +4,57 @@ import (
 	"airplane-seating/internal/seat"
 	"airplane-seating/internal/seat/layout"
 	"airplane-seating/internal/seat/seatType"
+	"errors"
+	"fmt"
 	"sort"
 )
 
-func allocatePassengersToSeats(l layout.Layout, numberOfPassengers int) {
-	seats, _ := layout.Initialise(l)
-	sortSeatsForAllocation(seats)
+type Allocator struct {
+	seatLayout                   layout.Layout
+	numberOfPassengersToBeSeated int
+}
+
+func NewAllocator(l layout.Layout, n int) *Allocator {
+	return &Allocator{
+		seatLayout:                   l,
+		numberOfPassengersToBeSeated: n,
+	}
+}
+
+func (a *Allocator) AllocatePassengersToSeats() error {
+	seats, _ := layout.Initialise(a.seatLayout)
+	if a.numberOfPassengersToBeSeated > len(seats) {
+		return errors.New(fmt.Sprintf("Not enough seats for %v passengers", a.numberOfPassengersToBeSeated))
+	}
+
+	seatsSortedForAllocation := sortSeatsForAllocation(seats)
+	fmt.Printf(">>>>>>>>>>>>>>>>>>>>\n")
+	layout.PrintSeats(seatsSortedForAllocation)
+
+	a.blockSeatsForPassengers(seatsSortedForAllocation)
+	fmt.Printf("--------------------\n")
+	layout.PrintSeats(seats)
+	return nil
+}
+
+func (a *Allocator) blockSeatsForPassengers(seats []*seat.Seat) {
+	for i := 0; i < a.numberOfPassengersToBeSeated; i++ {
+		seats[i].BlockSeat(i + 1)
+	}
 }
 
 func sortSeatsForAllocation(seats []*seat.Seat) []*seat.Seat {
 	aisleSeats := filterSeatsByType(seats, seatType.AISLE)
 	sortedAisleSeats := sortByRowAndColumn(aisleSeats)
-	layout.PrintSeats(sortedAisleSeats)
+	//layout.PrintSeats(sortedAisleSeats)
 
 	windowSeats := filterSeatsByType(seats, seatType.WINDOW)
 	sortedWindowSeats := sortByRowAndColumn(windowSeats)
-	layout.PrintSeats(sortedWindowSeats)
+	//layout.PrintSeats(sortedWindowSeats)
 
 	middleSeats := filterSeatsByType(seats, seatType.MIDDLE)
 	sortedMiddleSeats := sortByRowAndColumn(middleSeats)
-	layout.PrintSeats(sortedMiddleSeats)
+	//layout.PrintSeats(sortedMiddleSeats)
 
 	seatsSortedForAllocation := append(append(sortedAisleSeats, sortedWindowSeats...), sortedMiddleSeats...)
 	return seatsSortedForAllocation

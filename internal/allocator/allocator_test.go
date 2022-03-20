@@ -7,7 +7,19 @@ import (
 	"testing"
 )
 
-func Test_sortSeatsForAllocation_shouldReturnSortedSeats(t *testing.T) {
+func TestAllocator_AllocatePassengersToSeats_ShouldReturnErrorIfNotEnoughSeats(t *testing.T) {
+	allocator := NewAllocator([][]int{{2, 2}, {2, 2}}, 10)
+
+	assert.Error(t, allocator.AllocatePassengersToSeats())
+}
+
+func TestAllocator_AllocatePassengersToSeats_ShouldNotReturnErrorIfEnoughSeatsAreAvailable(t *testing.T) {
+	allocator := NewAllocator([][]int{{2, 2}, {2, 2}}, 6)
+
+	assert.NoError(t, allocator.AllocatePassengersToSeats())
+}
+
+func TestAllocator_sortSeatsForAllocation_ShouldReturnSortedSeats(t *testing.T) {
 	unsortedSeats := []*seat.Seat{
 		seat.NewSeat(seatType.WINDOW, 1, 1),
 		seat.NewSeat(seatType.AISLE, 1, 2),
@@ -34,7 +46,7 @@ func Test_sortSeatsForAllocation_shouldReturnSortedSeats(t *testing.T) {
 	assert.EqualValues(t, expectedSortedSeats, actualSortedSeats)
 }
 
-func Test_sortSeatsForAllocation_shouldReturnSortedSeatsWithMiddleSeat(t *testing.T) {
+func TestAllocator_sortSeatsForAllocation_ShouldReturnSortedSeatsWithMiddleSeat(t *testing.T) {
 	unsortedSeats := []*seat.Seat{
 		seat.NewSeat(seatType.WINDOW, 1, 1),
 		seat.NewSeat(seatType.MIDDLE, 1, 2),

@@ -1,7 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"airplane-seating/internal/allocator"
+)
 
 func main() {
-	fmt.Println("hello, world!")
+	seatAllocator := allocator.NewAllocator([][]int{{2, 2}, {2, 2}}, 6)
+	seatAllocator.AllocatePassengersToSeats()
 }

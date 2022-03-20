@@ -47,5 +47,5 @@ func (s *Seat) Column() int {
 }
 
 func (s Seat) PrintSeat() {
-	fmt.Printf("%v,%v-%v\n", s.row, s.column, s.seatType)
+	fmt.Printf("%v,%v-%v->%v\n", s.row, s.column, s.seatType, s.passengerId)
 }
