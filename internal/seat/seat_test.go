@@ -46,7 +46,7 @@ func TestSeat_Row_ShouldReturnRowOfSeat(t *testing.T) {
 	assert.Equal(t, 10, backSeat.Row())
 }
 
-func TestSeat_Column_ShouldReturnSolumnOfSeat(t *testing.T) {
+func TestSeat_Column_ShouldReturnColumnOfSeat(t *testing.T) {
 	windowSeat := NewSeat(seatType.WINDOW, 1, 1)
 	middleSeat := NewSeat(seatType.MIDDLE, 1, 2)
 	aisleSeat := NewSeat(seatType.AISLE, 1, 3)
@@ -54,4 +54,17 @@ func TestSeat_Column_ShouldReturnSolumnOfSeat(t *testing.T) {
 	assert.Equal(t, 1, windowSeat.Column())
 	assert.Equal(t, 2, middleSeat.Column())
 	assert.Equal(t, 3, aisleSeat.Column())
+}
+
+func TestSeat_PassengerID_ShouldReturnPassengerAssignedToSeat(t *testing.T) {
+	firstPassenger := 1
+	secondPassenger := 2
+	aisleSeat := NewSeat(seatType.AISLE, 1, 3)
+	aisleSeat.BlockSeat(firstPassenger)
+
+	secondAisleSeat := NewSeat(seatType.AISLE, 1, 4)
+	secondAisleSeat.BlockSeat(secondPassenger)
+
+	assert.Equal(t, firstPassenger, aisleSeat.PassengerId())
+	assert.Equal(t, secondPassenger, secondAisleSeat.PassengerId())
 }

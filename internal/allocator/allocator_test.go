@@ -10,13 +10,19 @@ import (
 func TestAllocator_AllocatePassengersToSeats_ShouldReturnErrorIfNotEnoughSeats(t *testing.T) {
 	allocator := NewAllocator([][]int{{2, 2}, {2, 2}}, 10)
 
-	assert.Error(t, allocator.AllocatePassengersToSeats())
+	allocatedSeats, err := allocator.AllocatePassengersToSeats()
+
+	assert.Nil(t, allocatedSeats)
+	assert.Error(t, err)
 }
 
 func TestAllocator_AllocatePassengersToSeats_ShouldNotReturnErrorIfEnoughSeatsAreAvailable(t *testing.T) {
 	allocator := NewAllocator([][]int{{2, 2}, {2, 2}}, 6)
 
-	assert.NoError(t, allocator.AllocatePassengersToSeats())
+	allocatedSeats, err := allocator.AllocatePassengersToSeats()
+
+	assert.NotNil(t, allocatedSeats)
+	assert.NoError(t, err)
 }
 
 func TestAllocator_sortSeatsForAllocation_ShouldReturnSortedSeats(t *testing.T) {
