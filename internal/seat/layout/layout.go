@@ -39,12 +39,12 @@ func Initialise(layout Layout) ([]*seat.Seat, error) {
 	fmt.Printf("aisles -> %v\n", aisleSeatColumns)
 	fmt.Printf("windows -> %v\n", windowSeatColumns)
 	fmt.Printf("middles -> %v\n", middleSeatColumns)
-	printSeats(seats)
+	PrintSeats(seats)
 
 	return seats, nil
 }
 
-func printSeats(seats []*seat.Seat) {
+func PrintSeats(seats []*seat.Seat) {
 	for i, _ := range seats {
 		seats[i].PrintSeat()
 	}

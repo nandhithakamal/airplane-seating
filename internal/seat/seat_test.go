@@ -7,7 +7,7 @@ import (
 )
 
 //todo: idempotent calls on BlockSeat
-func TestBlockSeat_ShouldReturnNilErrorIfSeatIsAvailable(t *testing.T) {
+func TestSeat_BlockSeat(t *testing.T) {
 	seat := NewSeat(seatType.WINDOW, 1, 2)
 	passengerId := 1
 
@@ -16,7 +16,7 @@ func TestBlockSeat_ShouldReturnNilErrorIfSeatIsAvailable(t *testing.T) {
 	assert.NoError(t, err)
 }
 
-func TestBlockSeat_ShouldReturnErrorIfSeatIsUnavailable(t *testing.T) {
+func TestSeat_BlockSeat_ShouldReturnErrorIfSeatIsUnavailable(t *testing.T) {
 	seat := NewSeat(seatType.MIDDLE, 1, 2)
 	passengerId := 1
 	anotherPassengerId := 2
@@ -26,4 +26,32 @@ func TestBlockSeat_ShouldReturnErrorIfSeatIsUnavailable(t *testing.T) {
 	err := seat.BlockSeat(anotherPassengerId)
 
 	assert.Error(t, err)
+}
+
+func TestSeat_SeatType_ShouldReturnSeatType(t *testing.T) {
+	windowSeat := NewSeat(seatType.WINDOW, 1, 1)
+	middleSeat := NewSeat(seatType.MIDDLE, 1, 2)
+	aisleSeat := NewSeat(seatType.AISLE, 1, 3)
+
+	assert.Equal(t, seatType.WINDOW, windowSeat.SeatType())
+	assert.Equal(t, seatType.MIDDLE, middleSeat.SeatType())
+	assert.Equal(t, seatType.AISLE, aisleSeat.SeatType())
+}
+
+func TestSeat_Row_ShouldReturnRowOfSeat(t *testing.T) {
+	frontSeat := NewSeat(seatType.WINDOW, 1, 1)
+	backSeat := NewSeat(seatType.AISLE, 10, 1)
+
+	assert.Equal(t, 1, frontSeat.Row())
+	assert.Equal(t, 10, backSeat.Row())
+}
+
+func TestSeat_Column_ShouldReturnSolumnOfSeat(t *testing.T) {
+	windowSeat := NewSeat(seatType.WINDOW, 1, 1)
+	middleSeat := NewSeat(seatType.MIDDLE, 1, 2)
+	aisleSeat := NewSeat(seatType.AISLE, 1, 3)
+
+	assert.Equal(t, 1, windowSeat.Column())
+	assert.Equal(t, 2, middleSeat.Column())
+	assert.Equal(t, 3, aisleSeat.Column())
 }

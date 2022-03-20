@@ -34,6 +34,18 @@ func NewSeat(seatType seatType.SeatType, row, column int) *Seat {
 	}
 }
 
+func (s *Seat) SeatType() seatType.SeatType {
+	return s.seatType
+}
+
+func (s *Seat) Row() int {
+	return s.row
+}
+
+func (s *Seat) Column() int {
+	return s.column
+}
+
 func (s Seat) PrintSeat() {
 	fmt.Printf("%v,%v-%v\n", s.row, s.column, s.seatType)
 }

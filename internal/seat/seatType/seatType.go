@@ -4,6 +4,6 @@ type SeatType string
 
 const (
 	WINDOW SeatType = "W"
-	MIDDLE          = "M"
-	AISLE           = "A"
+	MIDDLE SeatType = "M"
+	AISLE  SeatType = "A"
 )
