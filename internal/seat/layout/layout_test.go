@@ -66,8 +66,6 @@ func Test_computeExtremities_ShouldReturnBackMostRowAndRightMostColumnNumbers(t 
 			expectedBackMost:  4,
 			expectedRightMost: 10,
 		},
-
-		// TODO: test cases
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
@@ -75,6 +73,42 @@ func Test_computeExtremities_ShouldReturnBackMostRowAndRightMostColumnNumbers(t 
 			assert.NoError(t, actualErr)
 			assert.Equal(t, test.expectedBackMost, actualBackMost)
 			assert.Equal(t, test.expectedRightMost, actualRightMost)
+		})
+	}
+}
+
+func Test_computeAisleColumns_ShouldReturnAisleColumnNumbers(t *testing.T) {
+	tests := []struct {
+		name                 string
+		layout               [][]int
+		rightMost            int
+		expectedAisleColumns []int
+	}{
+		{
+			name:                 "2By2Layout",
+			layout:               [][]int{{2, 2}, {2, 2}},
+			rightMost:            4,
+			expectedAisleColumns: []int{2, 3},
+		},
+
+		{
+			name:                 "3 groups layout",
+			layout:               [][]int{{2, 3}, {4, 2}, {2, 4}},
+			rightMost:            9,
+			expectedAisleColumns: []int{3, 4, 5, 6},
+		},
+
+		{
+			name:                 "4 groups layout",
+			layout:               [][]int{{2, 3}, {4, 2}, {3, 2}, {2, 3}},
+			rightMost:            10,
+			expectedAisleColumns: []int{3, 4, 5, 6, 7, 8},
+		},
+	}
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			actualAisleColumns := computeAisleColumns(test.layout, test.rightMost)
+			assert.Equal(t, test.expectedAisleColumns, actualAisleColumns)
 		})
 	}
 }
