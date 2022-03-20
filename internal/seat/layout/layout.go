@@ -2,6 +2,7 @@ package layout
 
 import (
 	"airplane-seating/internal/seat"
+	"airplane-seating/internal/seat/seatType"
 	"fmt"
 )
 
@@ -9,19 +10,54 @@ const leftmostSeatColumn = 1
 
 type Layout [][]int
 
+var aisleSeatColumns []int
+var windowSeatColumns []int
+var middleSeatColumns []int
+
 func Initialise(layout Layout) ([]*seat.Seat, error) {
 	backMostSeatRow, rightMostSeatColumn, _ := computeExtremities(layout)
-	aisleSeatColumns := computeAisleColumns(layout, rightMostSeatColumn)
-	windowSeatColumns := computeWindowColumns(rightMostSeatColumn)
-	middleSeatColumns := computeMiddleColumns(windowSeatColumns, aisleSeatColumns)
+	aisleSeatColumns = computeAisleColumns(layout, rightMostSeatColumn)
+	windowSeatColumns = computeWindowColumns(rightMostSeatColumn)
+	middleSeatColumns = computeMiddleColumns(windowSeatColumns, aisleSeatColumns)
+
+	var seats []*seat.Seat
+	var finalColumnOfLastGroup int
+	for _, group := range layout {
+		rows := group[0]
+		columns := group[1]
+		for r := 1; r <= rows; r++ {
+			for c := 1; c <= columns; c++ {
+				seatType := findSeatType(finalColumnOfLastGroup + c)
+				seats = append(seats, seat.NewSeat(seatType, r, finalColumnOfLastGroup+c))
+			}
+		}
+		finalColumnOfLastGroup += columns
+	}
 
 	//todo: remove later
 	fmt.Printf("backMost -> %v\n rightMost -> %v\n", backMostSeatRow, rightMostSeatColumn)
 	fmt.Printf("aisles -> %v\n", aisleSeatColumns)
 	fmt.Printf("windows -> %v\n", windowSeatColumns)
 	fmt.Printf("middles -> %v\n", middleSeatColumns)
+	printSeats(seats)
 
-	return nil, nil
+	return seats, nil
+}
+
+func printSeats(seats []*seat.Seat) {
+	for i, _ := range seats {
+		seats[i].PrintSeat()
+	}
+}
+
+func findSeatType(column int) seatType.SeatType {
+	if isElementPresent(column, windowSeatColumns) {
+		return seatType.WINDOW
+	}
+	if isElementPresent(column, aisleSeatColumns) {
+		return seatType.AISLE
+	}
+	return seatType.MIDDLE
 }
 
 func computeExtremities(layout Layout) (int, int, error) {
@@ -60,7 +96,7 @@ func computeWindowColumns(rightMost int) []int {
 }
 
 func computeMiddleColumns(windowColumns, aisleColumns []int) []int {
-	var middleColumns []int
+	middleColumns := make([]int, 0, 0)
 	for i := leftmostSeatColumn + 1; i < windowColumns[1]; i++ {
 		if !isElementPresent(i, aisleColumns) {
 			middleColumns = append(middleColumns, i)

@@ -3,6 +3,7 @@ package seat
 import (
 	"airplane-seating/internal/seat/seatType"
 	"errors"
+	"fmt"
 )
 
 type Seat struct {
@@ -31,4 +32,8 @@ func NewSeat(seatType seatType.SeatType, row, column int) *Seat {
 		isAvailable: true,
 		passengerId: -1,
 	}
+}
+
+func (s Seat) PrintSeat() {
+	fmt.Printf("%v,%v-%v\n", s.row, s.column, s.seatType)
 }
