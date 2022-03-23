@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	seatAllocator := allocator.NewAllocator([][]int{{2, 3}, {3, 3}, {2, 3}}, 15)
+	seatAllocator := allocator.NewAllocator([][]int{{2, 2}, {2, 2}}, 4)
 	allocatedSeats, err := seatAllocator.AllocatePassengersToSeats()
 	if err != nil {
 		fmt.Errorf("error allocating seats to passengers - %v", err)

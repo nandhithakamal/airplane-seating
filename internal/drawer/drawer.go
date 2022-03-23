@@ -6,8 +6,8 @@ import (
 	tm "github.com/buger/goterm"
 )
 
-const boxWidth = 6
-const boxHeight = 5
+const boxWidth = 4
+const boxHeight = 3
 
 func DrawPassengerSeatMap(seats []*seat.Seat) {
 	tm.Clear()

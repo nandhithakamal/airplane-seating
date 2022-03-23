@@ -1,4 +1,4 @@
-package seatType
+package seattype
 
 type SeatType string
 

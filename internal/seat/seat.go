@@ -1,13 +1,13 @@
 package seat
 
 import (
-	"airplane-seating/internal/seat/seatType"
+	"airplane-seating/internal/seat/seattype"
 	"errors"
 	"fmt"
 )
 
 type Seat struct {
-	seatType    seatType.SeatType
+	seatType    seattype.SeatType
 	row         int
 	column      int
 	isAvailable bool
@@ -24,7 +24,7 @@ func (s *Seat) BlockSeat(passengerId int) error {
 	return nil
 }
 
-func NewSeat(seatType seatType.SeatType, row, column int) *Seat {
+func NewSeat(seatType seattype.SeatType, row, column int) *Seat {
 	return &Seat{
 		seatType:    seatType,
 		row:         row,
@@ -34,7 +34,7 @@ func NewSeat(seatType seatType.SeatType, row, column int) *Seat {
 	}
 }
 
-func (s *Seat) SeatType() seatType.SeatType {
+func (s *Seat) SeatType() seattype.SeatType {
 	return s.seatType
 }
 
