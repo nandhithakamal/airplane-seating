@@ -54,14 +54,14 @@ func TestSeatMap_computeExtremities_ShouldReturnBackMostRowAndRightMostColumnNum
 		},
 
 		{
-			name:              "3 groups seatmap",
+			name:              "3 groups seat map",
 			layout:            [][]int{{2, 3}, {4, 2}, {2, 4}},
 			expectedBackMost:  4,
 			expectedRightMost: 9,
 		},
 
 		{
-			name:              "4 groups seatmap",
+			name:              "4 groups seat map",
 			layout:            [][]int{{2, 3}, {4, 2}, {3, 2}, {2, 3}},
 			expectedBackMost:  4,
 			expectedRightMost: 10,
@@ -92,14 +92,14 @@ func TestSeatMap_computeAisleColumns_ShouldReturnAisleColumnNumbers(t *testing.T
 		},
 
 		{
-			name:                 "3 groups seatmap",
+			name:                 "3 groups seat map",
 			layout:               [][]int{{2, 3}, {4, 2}, {2, 4}},
 			rightMost:            9,
 			expectedAisleColumns: []int{3, 4, 5, 6},
 		},
 
 		{
-			name:                 "4 groups seatmap",
+			name:                 "4 groups seat map",
 			layout:               [][]int{{2, 3}, {4, 2}, {3, 2}, {2, 3}},
 			rightMost:            10,
 			expectedAisleColumns: []int{3, 4, 5, 6, 7, 8},
