@@ -20,5 +20,4 @@ func Test_separateIndividual1DArrayElements(t *testing.T) {
 	assert.Equal(t, []string{"2,2", "3,3"}, separateIndividual1DArrayElements("[[2,2], [3,3]]"))
 	assert.Equal(t, []string{"2,2", "3,3", "4,4"}, separateIndividual1DArrayElements("[[2,2], [3,3], [4,4]]"))
 	assert.Equal(t, []string{"2,2", "3,3", "4,4"}, separateIndividual1DArrayElements("[[2,2],[3,3],[4,4]]"))
-
 }

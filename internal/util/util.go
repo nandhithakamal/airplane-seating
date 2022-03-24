@@ -12,5 +12,7 @@ func IsElementPresent(element int, arr []int) bool {
 }
 
 func HandleError(err error) {
-	log.Fatal(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
