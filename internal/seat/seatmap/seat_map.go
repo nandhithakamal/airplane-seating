@@ -28,12 +28,10 @@ func NewSeatMap(layout Layout) *SeatMap {
 
 var aisleSeatColumns []int
 var windowSeatColumns []int
-var middleSeatColumns []int
 
 func (m *SeatMap) Initialise() ([]*seat.Seat, error) {
 	aisleSeatColumns = m.computeAisleColumns()
 	windowSeatColumns = m.computeWindowColumns()
-	middleSeatColumns = m.computeMiddleColumns(windowSeatColumns, aisleSeatColumns)
 
 	var seats []*seat.Seat
 	var finalColumnOfLastGroup int
@@ -96,16 +94,6 @@ func (m *SeatMap) computeAisleColumns() []int {
 
 func (m *SeatMap) computeWindowColumns() []int {
 	return []int{LEFT_MOST_COLUMN, m.rightMostColumn}
-}
-
-func (m *SeatMap) computeMiddleColumns(windowColumns, aisleColumns []int) []int {
-	middleColumns := make([]int, 0, 0)
-	for i := LEFT_MOST_COLUMN + 1; i < windowColumns[1]; i++ {
-		if !util.IsElementPresent(i, aisleColumns) {
-			middleColumns = append(middleColumns, i)
-		}
-	}
-	return middleColumns
 }
 
 func (m *SeatMap) Seats() []*seat.Seat {
