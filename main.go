@@ -10,8 +10,8 @@ import (
 )
 
 func main() {
-	parser := parser.NewInputParser(bufio.NewReader(os.Stdin))
-	inputLayout, numberOfPassengers, err := parser.ParseInput()
+	inputParser := parser.NewInputParser(bufio.NewReader(os.Stdin))
+	inputLayout, numberOfPassengers, err := inputParser.ParseInput()
 	if err != nil {
 		log.Default().Fatal(err)
 	}
