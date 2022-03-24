@@ -15,6 +15,7 @@ type SeatMap struct {
 	layout          Layout
 	rightMostColumn int
 	backMostRow     int
+	seats           []*seat.Seat
 }
 
 func NewSeatMap(layout Layout) *SeatMap {
@@ -55,7 +56,7 @@ func (m *SeatMap) Initialise() ([]*seat.Seat, error) {
 	fmt.Printf("windows -> %v\n", windowSeatColumns)
 	fmt.Printf("middles -> %v\n", middleSeatColumns)
 	PrintSeats(seats)
-
+	m.seats = seats
 	return seats, nil
 }
 
@@ -118,4 +119,16 @@ func (m *SeatMap) computeMiddleColumns(windowColumns, aisleColumns []int) []int 
 		}
 	}
 	return middleColumns
+}
+
+func (m *SeatMap) Seats() []*seat.Seat {
+	return m.seats
+}
+
+func (m *SeatMap) RightMost() int {
+	return m.rightMostColumn
+}
+
+func (m *SeatMap) BackMost() int {
+	return m.backMostRow
 }

@@ -21,8 +21,9 @@ func NewAllocator(l seatmap.Layout, n int) *Allocator {
 	}
 }
 
-func (a *Allocator) AllocatePassengersToSeats() ([]*seat.Seat, error) {
-	seats, _ := seatmap.NewSeatMap(a.seatLayout).Initialise()
+func (a *Allocator) AllocatePassengersToSeats() (seatMap *seatmap.SeatMap, err error) {
+	m := seatmap.NewSeatMap(a.seatLayout)
+	seats, _ := m.Initialise()
 	if a.numberOfPassengersToBeSeated > len(seats) {
 		return nil, errors.New(fmt.Sprintf("Not enough seats for %v passengers", a.numberOfPassengersToBeSeated))
 	}
@@ -34,7 +35,7 @@ func (a *Allocator) AllocatePassengersToSeats() ([]*seat.Seat, error) {
 	a.blockSeatsForPassengers(seatsSortedForAllocation)
 	fmt.Printf("--------------------\n")
 	seatmap.PrintSeats(seats)
-	return seats, nil
+	return m, nil
 }
 
 func (a *Allocator) blockSeatsForPassengers(seats []*seat.Seat) {

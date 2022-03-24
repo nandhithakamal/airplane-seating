@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func Test_Initialise_ShouldReturnSeatsAccordingToLayout(t *testing.T) {
+func TestSeatMap_Initialise_ShouldReturnSeatsAccordingToLayout(t *testing.T) {
 	tests := []struct {
 		name     string
 		layout   [][]int
@@ -38,7 +38,7 @@ func Test_Initialise_ShouldReturnSeatsAccordingToLayout(t *testing.T) {
 	}
 }
 
-func Test_computeExtremities_ShouldReturnBackMostRowAndRightMostColumnNumbers(t *testing.T) {
+func TestSeatMap_computeExtremities_ShouldReturnBackMostRowAndRightMostColumnNumbers(t *testing.T) {
 	tests := []struct {
 		name              string
 		layout            [][]int
@@ -77,7 +77,7 @@ func Test_computeExtremities_ShouldReturnBackMostRowAndRightMostColumnNumbers(t 
 	}
 }
 
-func Test_computeAisleColumns_ShouldReturnAisleColumnNumbers(t *testing.T) {
+func TestSeatMap_computeAisleColumns_ShouldReturnAisleColumnNumbers(t *testing.T) {
 	tests := []struct {
 		name                 string
 		layout               [][]int
@@ -113,7 +113,7 @@ func Test_computeAisleColumns_ShouldReturnAisleColumnNumbers(t *testing.T) {
 	}
 }
 
-func Test_computeWindowColumns_ShouldReturnWindowColumnNumbers(t *testing.T) {
+func TestSeatMap_computeWindowColumns_ShouldReturnWindowColumnNumbers(t *testing.T) {
 	tests := []struct {
 		name                  string
 		layout                Layout
@@ -138,7 +138,7 @@ func Test_computeWindowColumns_ShouldReturnWindowColumnNumbers(t *testing.T) {
 	}
 }
 
-func Test_computeMiddleColumns_ShouldReturnMiddleColumnNumbers(t *testing.T) {
+func TestSeatMap_computeMiddleColumns_ShouldReturnMiddleColumnNumbers(t *testing.T) {
 	tests := []struct {
 		name                  string
 		layout                Layout
