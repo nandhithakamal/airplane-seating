@@ -18,7 +18,7 @@ func DrawPassengerSeatMap(m *seatmap.SeatMap) {
 
 	for _, seat := range m.Seats() {
 		box := tm.NewBox(BOX_WIDTH|tm.PCT, BOX_HEIGHT, GO_TERM_FLAGS)
-		if seat.PassengerId() != -1 {
+		if !seat.IsAvailable() {
 			fmt.Fprint(box, seat.PassengerId())
 		}
 		fmt.Fprintln(box)

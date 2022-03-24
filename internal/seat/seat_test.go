@@ -2,6 +2,7 @@ package seat
 
 import (
 	"airplane-seating/internal/seat/seattype"
+	"airplane-seating/internal/util"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -60,10 +61,10 @@ func TestSeat_PassengerID_ShouldReturnPassengerAssignedToSeat(t *testing.T) {
 	firstPassenger := 1
 	secondPassenger := 2
 	aisleSeat := NewSeat(seattype.AISLE, 1, 3)
-	aisleSeat.BlockSeat(firstPassenger)
+	util.HandleError(aisleSeat.BlockSeat(firstPassenger))
 
 	secondAisleSeat := NewSeat(seattype.AISLE, 1, 4)
-	secondAisleSeat.BlockSeat(secondPassenger)
+	util.HandleError(secondAisleSeat.BlockSeat(secondPassenger))
 
 	assert.Equal(t, firstPassenger, aisleSeat.PassengerId())
 	assert.Equal(t, secondPassenger, secondAisleSeat.PassengerId())

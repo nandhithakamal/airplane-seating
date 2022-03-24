@@ -48,7 +48,7 @@ func (p *InputParser) ParseInput() (seatmap.Layout, int, error) {
 
 func convertStringToNumberOfPassengers(passengers string) (int, error) {
 	n, err := strconv.ParseInt(passengers, 10, 8)
-	if n < 0 {
+	if (n < 0) || (err != nil) {
 		return 0, errors.New("invalid number of passengers, please provide a positive number")
 	}
 	return int(n), err
@@ -59,16 +59,19 @@ func convertStringToLayout(inputString string) (seatmap.Layout, error) {
 	sanitised := separateIndividual1DArrayElements(inputString)
 	for _, s := range sanitised {
 		split := strings.Split(s, ",")
+		if len(split) <= 1 {
+			return nil, errors.New("invalid layout input")
+		}
 		r := strings.TrimSpace(split[1])
 		c := strings.TrimSpace(split[0])
 
 		row, err := strconv.ParseInt(r, 10, 8)
 		if err != nil {
-			return nil, err
+			return nil, errors.New("invalid layout input")
 		}
 		column, err := strconv.ParseInt(c, 10, 8)
 		if err != nil {
-			return nil, err
+			return nil, errors.New("invalid layout input")
 		}
 		layoutGroups = append(layoutGroups, []int{int(row), int(column)})
 	}

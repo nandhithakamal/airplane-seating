@@ -6,22 +6,13 @@ import (
 	"fmt"
 )
 
+const NO_PASSENGER = -1
+
 type Seat struct {
 	seatType    seattype.SeatType
 	row         int
 	column      int
-	isAvailable bool
 	passengerId int
-}
-
-func (s *Seat) BlockSeat(passengerId int) error {
-	if !s.isAvailable {
-		return errors.New("seat is already blocked")
-	}
-	s.passengerId = passengerId
-	s.isAvailable = false
-
-	return nil
 }
 
 func NewSeat(seatType seattype.SeatType, row, column int) *Seat {
@@ -29,9 +20,17 @@ func NewSeat(seatType seattype.SeatType, row, column int) *Seat {
 		seatType:    seatType,
 		row:         row,
 		column:      column,
-		isAvailable: true,
-		passengerId: -1,
+		passengerId: NO_PASSENGER,
 	}
+}
+
+func (s *Seat) BlockSeat(passengerId int) error {
+	if !s.IsAvailable() {
+		return errors.New("seat is already blocked")
+	}
+	s.passengerId = passengerId
+
+	return nil
 }
 
 func (s *Seat) SeatType() seattype.SeatType {
@@ -52,4 +51,8 @@ func (s *Seat) PassengerId() int {
 
 func (s Seat) PrintSeat() {
 	fmt.Printf("%v,%v-%v->%v\n", s.row, s.column, s.seatType, s.passengerId)
+}
+
+func (s *Seat) IsAvailable() bool {
+	return s.passengerId == NO_PASSENGER
 }

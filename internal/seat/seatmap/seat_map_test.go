@@ -27,7 +27,6 @@ func TestSeatMap_Initialise_ShouldReturnSeatsAccordingToLayout(t *testing.T) {
 				seat.NewSeat(seattype.WINDOW, 2, 4),
 			},
 		},
-		// TODO: test cases
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {

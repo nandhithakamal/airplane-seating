@@ -4,6 +4,7 @@ import (
 	"airplane-seating/internal/seat"
 	"airplane-seating/internal/seat/seatmap"
 	"airplane-seating/internal/seat/seattype"
+	"airplane-seating/internal/util"
 	"errors"
 	"fmt"
 	"sort"
@@ -39,7 +40,7 @@ func (a *Allocator) AllocatePassengersToSeats() (seatMap *seatmap.SeatMap, err e
 
 func (a *Allocator) blockSeatsForPassengers(seats []*seat.Seat) {
 	for i := 0; i < a.numberOfPassengersToBeSeated; i++ {
-		seats[i].BlockSeat(i + 1)
+		util.HandleError(seats[i].BlockSeat(i + 1))
 	}
 }
 
