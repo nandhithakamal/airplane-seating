@@ -4,7 +4,6 @@ import (
 	"airplane-seating/internal/seat"
 	"airplane-seating/internal/seat/seattype"
 	"airplane-seating/internal/util"
-	"fmt"
 )
 
 const LEFT_MOST_COLUMN = 1
@@ -43,30 +42,18 @@ func (m *SeatMap) Initialise() ([]*seat.Seat, error) {
 		columns := group[1]
 		for r := 1; r <= rows; r++ {
 			for c := 1; c <= columns; c++ {
-				typeOfSeat := findSeatType(finalColumnOfLastGroup + c)
+				typeOfSeat := findSeatTypeByColumn(finalColumnOfLastGroup + c)
 				seats = append(seats, seat.NewSeat(typeOfSeat, r, finalColumnOfLastGroup+c))
 			}
 		}
 		finalColumnOfLastGroup += columns
 	}
 
-	//todo: remove later
-	fmt.Printf("backMost -> %v\n rightMost -> %v\n", m.backMostRow, m.rightMostColumn)
-	fmt.Printf("aisles -> %v\n", aisleSeatColumns)
-	fmt.Printf("windows -> %v\n", windowSeatColumns)
-	fmt.Printf("middles -> %v\n", middleSeatColumns)
-	PrintSeats(seats)
 	m.seats = seats
 	return seats, nil
 }
 
-func PrintSeats(seats []*seat.Seat) {
-	for i := range seats {
-		seats[i].PrintSeat()
-	}
-}
-
-func findSeatType(column int) seattype.SeatType {
+func findSeatTypeByColumn(column int) seattype.SeatType {
 	if util.IsElementPresent(column, windowSeatColumns) {
 		return seattype.WINDOW
 	}

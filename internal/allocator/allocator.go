@@ -23,18 +23,17 @@ func NewAllocator(l seatmap.Layout, n int) *Allocator {
 
 func (a *Allocator) AllocatePassengersToSeats() (seatMap *seatmap.SeatMap, err error) {
 	m := seatmap.NewSeatMap(a.seatLayout)
-	seats, _ := m.Initialise()
+	seats, err := m.Initialise()
+	if err != nil {
+		return nil, err
+	}
 	if a.numberOfPassengersToBeSeated > len(seats) {
 		return nil, errors.New(fmt.Sprintf("Not enough seats for %v passengers", a.numberOfPassengersToBeSeated))
 	}
 
 	seatsSortedForAllocation := sortSeatsForAllocation(seats)
-	fmt.Printf(">>>>>>>>>>>>>>>>>>>>\n")
-	seatmap.PrintSeats(seatsSortedForAllocation)
-
 	a.blockSeatsForPassengers(seatsSortedForAllocation)
-	fmt.Printf("--------------------\n")
-	seatmap.PrintSeats(seats)
+
 	return m, nil
 }
 
@@ -47,15 +46,12 @@ func (a *Allocator) blockSeatsForPassengers(seats []*seat.Seat) {
 func sortSeatsForAllocation(seats []*seat.Seat) []*seat.Seat {
 	aisleSeats := filterSeatsByType(seats, seattype.AISLE)
 	sortedAisleSeats := sortByRowAndColumn(aisleSeats)
-	//seatmap.PrintSeats(sortedAisleSeats)
 
 	windowSeats := filterSeatsByType(seats, seattype.WINDOW)
 	sortedWindowSeats := sortByRowAndColumn(windowSeats)
-	//seatmap.PrintSeats(sortedWindowSeats)
 
 	middleSeats := filterSeatsByType(seats, seattype.MIDDLE)
 	sortedMiddleSeats := sortByRowAndColumn(middleSeats)
-	//seatmap.PrintSeats(sortedMiddleSeats)
 
 	seatsSortedForAllocation := append(append(sortedAisleSeats, sortedWindowSeats...), sortedMiddleSeats...)
 	return seatsSortedForAllocation
