@@ -3,16 +3,23 @@ package main
 import (
 	"airplane-seating/internal/allocator"
 	"airplane-seating/internal/drawer"
-	"fmt"
+	"airplane-seating/internal/parser"
+	"bufio"
+	"log"
+	"os"
 )
 
 func main() {
-	//seatAllocator := allocator.NewAllocator([][]int{{2, 2}, {3, 3}, {4, 2}, {2, 2}}, 22)
-	seatAllocator := allocator.NewAllocator([][]int{{2, 3}, {3, 4}, {2, 2}}, 6)
-	//seatAllocator := allocator.NewAllocator([][]int{{2, 3}, {2, 2}}, 4)
+	parser := parser.NewInputParser(bufio.NewReader(os.Stdin))
+	inputLayout, numberOfPassengers, err := parser.ParseInput()
+	if err != nil {
+		log.Default().Fatal(err)
+	}
+
+	seatAllocator := allocator.NewAllocator(inputLayout, numberOfPassengers)
 	allocatedSeatMap, err := seatAllocator.AllocatePassengersToSeats()
 	if err != nil {
-		fmt.Errorf("error allocating seats to passengers - %v", err)
+		log.Default().Fatalf("error allocating seats to passengers - %v\n", err)
 	}
 
 	drawer.DrawPassengerSeatMap(allocatedSeatMap)
