@@ -10,10 +10,11 @@ const LEFT_MOST_COLUMN = 1
 
 type Layout [][]int
 
+//todo - could pass SeatMap instead of []*Seat
 type SeatMap struct {
 	layout          Layout
-	rightMostColumn int
-	backMostRow     int
+	rightMostColumn int //can be computed and hence need not be a member variable
+	backMostRow     int //can be computed and hence need not be a member variable
 	seats           []*seat.Seat
 }
 
@@ -48,7 +49,7 @@ func (m *SeatMap) Initialise() ([]*seat.Seat, error) {
 	}
 
 	m.seats = seats
-	return seats, nil
+	return seats, nil //todo - return m.seats?
 }
 
 func findSeatTypeByColumn(column int) seattype.SeatType {

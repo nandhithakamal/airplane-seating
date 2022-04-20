@@ -3,9 +3,11 @@ package drawer
 import (
 	"airplane-seating/internal/seat/seatmap"
 	"fmt"
+
 	tm "github.com/buger/goterm"
 )
 
+//make terminal agnostic
 const BOX_WIDTH = 5
 const BOX_HEIGHT = 4
 const GO_TERM_FLAGS = 0

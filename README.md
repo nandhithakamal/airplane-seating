@@ -11,3 +11,6 @@ seats (any order in center seats)
 * a 2D array that represents the rows and columns [ [3,4], [4,5],
 [2,3], [3,4] ]
 * number of passengers waiting in queue
+
+//todo: add instructions on how to run
+//todo: add sample i/o
